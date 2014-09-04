@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+$:.unshift(File.expand_path(File.join('..', '..', 'lib'), __FILE__))
+require 'viaduct/toolkit'
+Viaduct::Toolkit.add_commands
+Viaduct::Toolkit.cli.run!
