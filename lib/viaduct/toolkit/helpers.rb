@@ -28,7 +28,7 @@ module Viaduct
             return app.data
           else
             puts "Couldn't find application with subdomain matching '#{subdomain}'".red
-            Process.exit(1)
+            exit(1)
           end
         else
           # Look up from repo
@@ -42,7 +42,7 @@ module Viaduct
                 potential_repositories.each do |repo|
                   puts "  * #{repo}".red
                 end
-                Process.exit(1)
+                exit(1)
               elsif app.data.size == 1
                 return find_application(app.data.first['subdomain'])
               else
@@ -56,7 +56,7 @@ module Viaduct
         end
         
         puts "Couldn't determine a Viaduct application from command.".red
-        Process.exit(1)
+        exit(1)
       end
       
       def heading(title)

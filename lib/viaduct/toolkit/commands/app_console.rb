@@ -21,7 +21,7 @@ Viaduct::Toolkit.cli.command "app:console" do |c|
           puts
           puts "    $ vdt ssh_keys:add".blue
           puts
-          Process.exit(1)
+          exit(1)
         else
           stdout, stderr, status = run("ssh-add -l")
           if status == 0
@@ -104,7 +104,7 @@ Viaduct::Toolkit.cli.command "app:console" do |c|
             
           else
             puts "Unfortunately, unless enabled you cannot use this command.".red
-            Process.exit(1)
+            exit(1)
           end
         end
         
