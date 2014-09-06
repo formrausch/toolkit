@@ -30,7 +30,8 @@ Viaduct::Toolkit.cli.command "app:deployment" do |c|
           end
         end
       else
-        error "Couldn't get deployment details"
+        puts "No deployment is currently active for this application.".yellow
+        exit(1)
       end
     end
   end
