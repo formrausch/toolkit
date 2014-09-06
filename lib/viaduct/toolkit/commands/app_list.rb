@@ -10,7 +10,7 @@ Viaduct::Toolkit.cli.command "app:list" do |c|
       if response.success?
         applications = applications | response.data
       else
-        raise Viaduct::Toolkit::Error, "Couldn't get list of applications."
+        error "Couldn't get list of applications."
       end
       pages_seen += 1
       if pages_seen == response.flags['paginated']['page']
@@ -25,10 +25,9 @@ Viaduct::Toolkit.cli.command "app:list" do |c|
     else
       require 'terminal-table'
       rows = applications.map do |app|
-        [app['name'], app['viaduct_domain'], app['status'], app['user']['name']]
+        [app['name'], app['subdomain'], app['status'], app['user']['name']]
       end
-      table = Terminal::Table.new :rows => rows, :headings => ['Name', 'Domain', 'Status', 'Owner']
-      puts table
+      puts Terminal::Table.new :rows => rows, :headings => ['Name', 'Subdomain', 'Status', 'Owner']
     end
     
   end

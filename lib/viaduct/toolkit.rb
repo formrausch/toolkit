@@ -7,6 +7,10 @@ require 'viaduct/api'
 # Hardcoded for this application.
 Viaduct::API.application_token = '3148984b-8a50-424c-98f5-117e8dea2971'
 
+# Add our helpers to Commander
+require 'viaduct/toolkit/helpers'
+Commander::Methods.send :include, Viaduct::Toolkit::Helpers
+
 module Viaduct
   module Toolkit
     
@@ -14,6 +18,11 @@ module Viaduct
     end
     
     class << self
+      
+      def binary
+        File.expand_path(File.join('..', '..', '..', 'bin', 'viaduct'), __FILE__)
+      end
+      
       def cli
         @cli ||= begin
           c = Commander::Runner.instance
@@ -21,6 +30,7 @@ module Viaduct
           c.program :version, Viaduct::Toolkit::VERSION
           c.program :description, "A CLI toolkit for Viaduct developers"
           c.global_option('-c', '--config FILE', 'The config file to store local credentials within') { |file| $config_file_path = file }
+          c.default_command :help
           c
         end
       end

@@ -9,14 +9,24 @@ Viaduct::Toolkit.cli.command "login" do |c|
     
     response = Viaduct::Toolkit.api.authentication.create_login_token
     if response.success?
+      
+      puts "To log you in we need to open a browser window to allow".magenta
+      puts "you to enter your login details. ".magenta
       puts
-      puts "  A browser window should now open and allow you to login"
-      puts "  to your Viaduct account. Please login and return here"
-      puts "  when you're finished."
+      if agree("Shall we open this for you?".blue)
+        system("open", response.data['url'])
+      else
+        puts
+        puts "That's fine. Just go to the URL below in your browser.".magenta
+        puts "This command will continue to run until you complete this".magenta
+        puts "action.".magenta
+        puts
+        puts response.data['url']
+      end
+      
       puts
-      puts "  Please wait while we verify your login..."
+      puts "Please wait while we verify your login...".magenta
       puts
-      system("open", response.data['url'])
       check_response = nil
       100.times do
         sleep 3
@@ -27,10 +37,10 @@ Viaduct::Toolkit.cli.command "login" do |c|
             @authorised = true
             break
           elsif check_response.data['status'] == 'denied'
-            raise Viaduct::Toolkit::Error, "The login request was rejected. Ensure that you approve the login request."
+            error "The login request was rejected. Ensure that you approve the login request."
           end
         else
-          raise Viaduct::Toolkit::Error, "Couldn't successfully exchange login token for an API token. Please try again later."
+          error "Couldn't successfully exchange login token for an API token. Please try again later."
         end
       end
       
@@ -41,20 +51,19 @@ Viaduct::Toolkit.cli.command "login" do |c|
         user_check = Viaduct::Toolkit.api.user.details
         if user_check.success?
           Viaduct::Toolkit.save_config
-          puts "  Hello #{user_check.data['name']}!".green
-          puts "  Your user account is now authorised. Your login details are".green
-          puts "  stored in a .viaduct file in your home directory.".green
+          puts "Hello #{user_check.data['name']}!".green
+          puts "Your user account is now authorised. Your login details are".magenta
+          puts "stored in a .viaduct file in your home directory.".magenta
           puts
         else
-          raise Viaduct::Toolkit::Error, "We couldn't verify your user details. Please try again."
+          error "We couldn't verify your user details. Please try again."
         end
       else
-        raise Viaduct::Toolkit::Error, "We didn't receive a login response in a timely manner. Please try again."
+        error "We didn't receive a login response in a timely manner. Please try again."
       end
       
     else
-      raise Viaduct::Toolkit::Error, "Couldn't generate a remote login token. Please try again."
-      Process.exit(1)
+      error "Couldn't generate a remote login token. Please try again."
     end
     
   end
