@@ -4,13 +4,23 @@ module Viaduct
   module Toolkit
     module Helpers
       
+      def length_of_time(seconds)
+        "#{seconds} seconds"
+      end
+      
+      def time(time)
+        require 'time'
+        time = Time.parse(time) rescue nil
+        time ? time.strftime("%d %B %Y at %H:%M:%S") : ''
+      end
+      
       def boolean(bool)
         bool ? "\u2713".green : "-".red
       end
       
       def table(headings, rows)
         require 'terminal-table'
-        puts Terminal::Table.new :rows => rows, :headings => headings
+        puts Terminal::Table.new :rows => rows, :headings => headings.map(&:blue)
       end
       
       def validation_errors(errors)
