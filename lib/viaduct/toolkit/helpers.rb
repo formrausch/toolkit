@@ -4,6 +4,15 @@ module Viaduct
   module Toolkit
     module Helpers
       
+      def boolean(bool)
+        bool ? "\u2713".green : "-".red
+      end
+      
+      def table(headings, rows)
+        require 'terminal-table'
+        puts Terminal::Table.new :rows => rows, :headings => headings
+      end
+      
       def validation_errors(errors)
         errors.each do |field, messages|
           messages.each do |message|
