@@ -14,7 +14,7 @@ Viaduct::Toolkit.cli.command "app:info" do |c|
         field 'Owner', "#{application['user']['name']} (#{application['user']['username']})"
         field "Zone", application['zone']['name']
         field "Platform", "#{application['platform']['name']} (on #{application['platform']['stack']['name']} stack)"
-        
+        field "Subnet(s)", application['subnets'].map { |s| s['description'] }.join(', ')
         if application['repository'] && application['source_backend_module'] == 'Viaduct::SourceBackends::Repository'
           heading "Repository"
           field 'URL', application['repository']['repository']['url']
