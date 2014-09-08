@@ -6,6 +6,7 @@ Viaduct::Toolkit.cli.command "app:deployments" do |c|
   
   c.action do |args, opts|
     include Commander::Methods
+    ensure_logged_in!
     if application = find_application(args[0])
       response = Viaduct::Toolkit.api.applications.deployments(:application => application['subdomain'], :page => opts.page ? opts.page.to_i : 1)
       if response.success?

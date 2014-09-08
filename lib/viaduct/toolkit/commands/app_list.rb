@@ -3,6 +3,9 @@ Viaduct::Toolkit.cli.command "app:list" do |c|
   c.description = "Show a list of all applications you have access to"
   c.option "--simple", "Return just a list of subdomains"
   c.action do |args, opts|
+    include Commander::Methods
+    ensure_logged_in!
+    
     pages_seen = 0
     applications = []
     loop do
@@ -23,11 +26,10 @@ Viaduct::Toolkit.cli.command "app:list" do |c|
         puts application['subdomain']
       end
     else
-      require 'terminal-table'
       rows = applications.map do |app|
         [app['name'], app['subdomain'], app['status'], app['user']['name']]
       end
-      puts Terminal::Table.new :rows => rows, :headings => ['Name', 'Subdomain', 'Status', 'Owner']
+      table ['Name', 'Subdomain', 'Status', 'Owner'], rows
     end
     
   end

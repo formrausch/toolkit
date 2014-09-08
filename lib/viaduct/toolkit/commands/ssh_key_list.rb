@@ -5,6 +5,7 @@ Viaduct::Toolkit.cli.command "ssh_key:list" do |c|
   
   c.action do |args, opts|
     include Commander::Methods
+    ensure_logged_in!
     
     response = Viaduct::Toolkit.api.ssh_keys.all
     if response.success?

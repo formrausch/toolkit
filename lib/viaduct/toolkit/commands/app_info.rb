@@ -4,6 +4,7 @@ Viaduct::Toolkit.cli.command "app:info" do |c|
   c.description = "Show details of an existing application"
   c.action do |args, opts|
     include Commander::Methods
+    ensure_logged_in!
     if application = find_application(args[0])
       details do
         heading "Application Details"

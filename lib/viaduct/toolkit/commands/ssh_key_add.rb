@@ -5,6 +5,7 @@ Viaduct::Toolkit.cli.command "ssh_key:add" do |c|
   
   c.action do |args, opts|
     include Commander::Methods
+    ensure_logged_in!
     
     key_path = args[0]
     

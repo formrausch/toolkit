@@ -7,6 +7,7 @@ Viaduct::Toolkit.cli.command "app:env" do |c|
   c.option "--export", "Return environment variables as export lines"
   c.action do |args, opts|
     include Commander::Methods
+    ensure_logged_in!
     if application = find_application(args[0])
       response = Viaduct::Toolkit.api.applications.environment_variables(:application => application['subdomain'])
       if response.success?

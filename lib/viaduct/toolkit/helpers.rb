@@ -3,6 +3,16 @@ require 'open3'
 module Viaduct
   module Toolkit
     module Helpers
+      def ensure_logged_in!
+        if Viaduct::Toolkit.config['token'].nil? && Viaduct::Toolkit.config['secret'].nil?
+          puts "You need to login before using this toolkit. Use the command below".yellow
+          puts "to login to your Viaduct account.".yellow
+          puts
+          puts "  $ vdt login"
+          puts
+          exit 1
+        end
+      end
       
       def length_of_time(seconds)
         "#{seconds} seconds"

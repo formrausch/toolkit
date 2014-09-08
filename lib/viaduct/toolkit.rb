@@ -71,12 +71,6 @@ module Viaduct
         end
       end
       
-      def check_logged_in!
-        puts config.inspect
-        if config['token'].nil? && config['secret'].nil?
-          raise Error, "You're not logged in. Use 'login' to login before running other commands."
-        end
-      end
     end
   end
 end

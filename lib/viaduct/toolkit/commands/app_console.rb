@@ -8,6 +8,7 @@ Viaduct::Toolkit.cli.command "app:console" do |c|
   
   c.action do |args, opts|
     include Commander::Methods
+    ensure_logged_in!
     if app = find_application(args[0])
       
       # Check the user's SSH keys

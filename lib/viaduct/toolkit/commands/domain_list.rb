@@ -3,6 +3,7 @@ Viaduct::Toolkit.cli.command "domain:list" do |c|
   c.description = "Return a list of domains for an application"
   c.action do |args, opts|
     include Commander::Methods
+    ensure_logged_in!
     if app = find_application(args[0])
       response = Viaduct::Toolkit.api.domains.all(:application => app['subdomain'])
       if response.success?

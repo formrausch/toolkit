@@ -6,6 +6,7 @@ Viaduct::Toolkit.cli.command "app:status" do |c|
   
   c.action do |args, opts|
     include Commander::Methods
+    ensure_logged_in!
     if app = find_application(args[0])
       response = Viaduct::Toolkit.api.applications.status(:application => app['subdomain'])
       if response.success?
