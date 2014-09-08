@@ -11,7 +11,7 @@ module Viaduct
       def time(time)
         require 'time'
         time = Time.parse(time) rescue nil
-        time ? time.strftime("%d %B %Y at %H:%M:%S") : ''
+        time ? time.strftime("%d %B %Y at %H:%M:%S UTC") : ''
       end
       
       def boolean(bool)

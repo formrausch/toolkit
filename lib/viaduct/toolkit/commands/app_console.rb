@@ -4,6 +4,7 @@ Viaduct::Toolkit.cli.command "app:console" do |c|
   c.description = "Start a new SSH-based console session"
   c.option "--disable", "Disable access to the SSH console"
   c.option "--enable", "Enable access to the SSH console"
+  c.option "--status", "Display the status of the port forward"
   
   c.action do |args, opts|
     include Commander::Methods
@@ -49,7 +50,18 @@ Viaduct::Toolkit.cli.command "app:console" do |c|
         error "Couldn't get port forward information from API for application."
       end
       
-      if opts.disable
+      if opts.status
+        details do
+          heading "SSH console access"
+          field "Status", console['enabled'] ? "Enabled" : "Disabled"
+          field "Auto disable?", console['auto_disable_at'] ? time(console['auto_disable_at']) : ''
+          field "Connection", "#{console['ip_address']}:#{console['port']}"
+          console['allowed_ips'].each_with_index do |ip, i|
+            field i == 0 ? 'Allowed IPs' : '', ip
+          end
+        end
+      
+      elsif opts.disable
         
         # 
         # Just disable console access
@@ -75,9 +87,14 @@ Viaduct::Toolkit.cli.command "app:console" do |c|
         if console['enabled']
           puts "Console is already enabled.".yellow
         else
-          response = Viaduct::Toolkit.api.port_forwards.save(:id => console['id'], :enabled => 1)
+          auto_disable = agree("Would you like to disable this again after an hour?".blue)
+          response = Viaduct::Toolkit.api.port_forwards.save(:id => console['id'], :enabled => 1, :auto_disable_at => (auto_disable ? '1 hour from now' : nil))
           if response.success?
-            puts "Console access has been enabled.".green
+            if auto_disable
+              puts "Console access has been enaled and will be automatically disabled again in 1 hour.".green
+            else
+              puts "Console access has been enabled.".green
+            end
           else
             error "We couldn't enable console access at this time. Please try later."
           end
@@ -88,20 +105,15 @@ Viaduct::Toolkit.cli.command "app:console" do |c|
         #
         # Enable if needed and connect.
         #
-        disable_on_disconnect = false
-        
         unless console['enabled']
           puts "SSH Console access is not currently enabled for this application.".magenta
-          if agree("Would you like to enable it now?".blue)
-            response = Viaduct::Toolkit.api.port_forwards.save(:id => console['id'], :enabled => 1)
+          if enable =  agree("Would you like to enable it now?".blue)
+            disable_after_hour = agree("Would you like to disable this again after an hour?".blue)
+            response = Viaduct::Toolkit.api.port_forwards.save(:id => console['id'], :enabled => 1, :auto_disable_at => (disable_after_hour ? "1 hour from now" : nil))
             unless response.success?
+              puts response.inspect
               error "We couldn't enable console access at this time. Please try later."
             end
-            
-            if agree("Would you like to disable this when you've finished?".blue)
-              disable_on_disconnect = true
-            end
-            
           else
             puts "Unfortunately, unless enabled you cannot use this command.".red
             exit(1)
@@ -109,9 +121,6 @@ Viaduct::Toolkit.cli.command "app:console" do |c|
         end
         
         command = "ssh vdt@#{console['ip_address']} -p #{console['port']}"
-        if disable_on_disconnect
-          command += " ; #{Viaduct::Toolkit.binary} app:console #{app['subdomain']} --disable"
-        end
         
         exec(command)
       end
