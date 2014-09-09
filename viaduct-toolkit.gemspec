@@ -3,7 +3,7 @@ $:.push File.expand_path("../lib", __FILE__)
 require "viaduct/toolkit/version"
 
 Gem::Specification.new do |s|
-  s.name        = "viaduct-tookit"
+  s.name        = "viaduct-toolkit"
   s.version     = Viaduct::Toolkit::VERSION
   s.authors     = ["Adam Cooke"]
   s.email       = ["adam@viaduct.io"]
@@ -15,6 +15,6 @@ Gem::Specification.new do |s|
   s.add_dependency "commander", '~> 4.2'
   s.add_dependency "viaduct-api", "~> 1.0"
   s.add_dependency "colorize", "~> 0.7"
-  s.add_dependency "terminal-table", "~> 1.4.5"
+  s.add_dependency "terminal-table", '~> 1.4', '>= 1.4.5'
   s.licenses    = ["MIT"]
 end

@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    viaduct-tookit (0.0.1)
+    viaduct-toolkit (0.0.1)
       colorize (~> 0.7)
       commander (~> 4.2)
       terminal-table (~> 1.4.5)
@@ -25,4 +25,4 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  viaduct-tookit!
+  viaduct-toolkit!
