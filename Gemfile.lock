@@ -1,10 +1,10 @@
 PATH
   remote: .
   specs:
-    viaduct-toolkit (0.0.1)
+    viaduct-toolkit (0.0.3)
       colorize (~> 0.7)
       commander (~> 4.2)
-      terminal-table (~> 1.4.5)
+      terminal-table (~> 1.4, >= 1.4.5)
       viaduct-api (~> 1.0)
 
 GEM
