@@ -10,7 +10,8 @@ Gem::Specification.new do |s|
   s.homepage    = "http://viaduct.io"
   s.summary     = "A developer toolkit for working with Viaduct from an CLI"
   s.description = "A set of useful tools to help developers use & manage their Viaduct applications."
-  s.files = Dir["{lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
+  s.files = Dir["{bin,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
+  s.executables << "vdt"
   s.add_dependency "commander", '~> 4.2'
   s.add_dependency "viaduct-api", "~> 1.0"
   s.add_dependency "colorize", "~> 0.7"
