@@ -50,7 +50,8 @@ Viaduct::Toolkit.cli.command "app:status" do |c|
             field "Number", response.data['deployment']['number']
             field 'Version', response.data['deployment']['version']['id']
             field "Description", response.data['deployment']['version']['description']
-            field "Deployer", response.data['deployment']['user'] ? response.data['deployment']['user']['full_name'] : ''
+            field "Source", response.data['deployment']['triggered_from']
+            field "Deployer", response.data['deployment']['user'] ? response.data['deployment']['user']['full_name'] : response.data['deployment']['triggerer']
             field "Started", time(response.data['deployment']['timing']['started_at'])
           end
         

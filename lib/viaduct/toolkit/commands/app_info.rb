@@ -31,8 +31,11 @@ Viaduct::Toolkit.cli.command "app:info" do |c|
           field 'Started at', application['deployment']['timing']['created_at']
           field 'Time', application['deployment']['timing']['time'].round(1).to_s + "s"
           field 'Description', application['deployment']['version']['description']
+          field 'Source', application['deployment']['triggered_from']
           if application['deployment']['user']
             field 'Deployer', "#{application['deployment']['user']['name']} (#{application['deployment']['user']['username']})"
+          elsif application['deployment']['triggerer']
+            field 'Deployer', application['deployment']['triggerer']
           end
         end
       end
