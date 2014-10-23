@@ -4,7 +4,7 @@ module Viaduct
   module Toolkit
     module Helpers
       def ensure_logged_in!
-        if Viaduct::Toolkit.config['token'].nil? && Viaduct::Toolkit.config['secret'].nil?
+        if Viaduct::Toolkit.env_config['token'].nil? && Viaduct::Toolkit.env_config['secret'].nil?
           puts "You need to login before using this toolkit. Use the command below".yellow
           puts "to login to your Viaduct account.".yellow
           puts

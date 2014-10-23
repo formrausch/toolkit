@@ -3,8 +3,8 @@ Viaduct::Toolkit.cli.command "login" do |c|
   c.description = "Authenticate this computer with your Viaduct account"
   c.action do |args, options|
     
-    Viaduct::Toolkit.config['token'] = nil
-    Viaduct::Toolkit.config['secret'] = nil
+    Viaduct::Toolkit.env_config['token'] = nil
+    Viaduct::Toolkit.env_config['secret'] = nil
     Viaduct::Toolkit.save_config
     
     response = Viaduct::Toolkit.api.authentication.create_login_token
@@ -45,8 +45,8 @@ Viaduct::Toolkit.cli.command "login" do |c|
       end
       
       if @authorised
-        Viaduct::Toolkit.config['token'] = check_response.data['token']['token']
-        Viaduct::Toolkit.config['secret'] = check_response.data['token']['secret']
+        Viaduct::Toolkit.env_config['token'] = check_response.data['token']['token']
+        Viaduct::Toolkit.env_config['secret'] = check_response.data['token']['secret']
 
         user_check = Viaduct::Toolkit.api.user.details
         if user_check.success?

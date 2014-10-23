@@ -1,24 +1,24 @@
 PATH
   remote: .
   specs:
-    viaduct-toolkit (0.0.3)
+    viaduct-toolkit (0.1.0)
       colorize (~> 0.7)
       commander (~> 4.2)
       terminal-table (~> 1.4, >= 1.4.5)
-      viaduct-api (~> 1.0)
+      viaduct-api (~> 1.0.4)
 
 GEM
   remote: https://rubygems.org/
   specs:
     colorize (0.7.3)
-    commander (4.2.0)
+    commander (4.2.1)
       highline (~> 1.6.11)
     highline (1.6.21)
     json (1.8.1)
     moonrope-client (1.0.0)
       json (~> 1.8, >= 1.8.0)
     terminal-table (1.4.5)
-    viaduct-api (1.0.1)
+    viaduct-api (1.0.4)
       moonrope-client (~> 1.0)
 
 PLATFORMS

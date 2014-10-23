@@ -31,6 +31,7 @@ module Viaduct
           c.program :description, "A CLI toolkit for Viaduct developers"
           c.global_option('-c', '--config FILE', 'The config file to store local credentials within') { |file| $config_file_path = file }
           c.global_option('--app NAME', 'The application to work on') { |name| $app = name }
+          c.global_option('--dev', 'Connect to local development installation of Viaduct (dev only)') { $dev = true }
           c.default_command :help
           c
         end
@@ -44,9 +45,13 @@ module Viaduct
     
       def api
         @api ||= begin
-          Viaduct::API.host = config['host']                    if config['host']
-          Viaduct::API.application_token = config['app_token']  if config['app_token']
-          Viaduct::API::Client.new(config['token'], config['secret'])
+          if $dev
+            Viaduct::API.host = 'localhost'
+            Viaduct::API.port = 5000
+            Viaduct::API.ssl = false
+            Viaduct::API.application_token = 'example'
+          end
+          Viaduct::API::Client.new(env_config['token'], env_config['secret'])
         end
       end
       
@@ -57,11 +62,15 @@ module Viaduct
       def config_file_path
         $config_file_path || File.join(ENV['HOME'], '.viaduct')
       end
+      
+      def env_config
+        config[$dev ? 'dev' : 'live'] ||= {}
+      end
     
       def config
         @config ||= begin
           if File.exist?(config_file_path)
-            YAML.load_file(config_file_path)
+            YAML.load_file(config_file_path) || {}
           else
             {}
           end
