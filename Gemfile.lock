@@ -5,7 +5,7 @@ PATH
       colorize (~> 0.7)
       commander (~> 4.2)
       terminal-table (~> 1.4, >= 1.4.5)
-      viaduct-api (~> 1.0.4)
+      viaduct-api (~> 1.0.5)
 
 GEM
   remote: https://rubygems.org/
@@ -15,11 +15,11 @@ GEM
       highline (~> 1.6.11)
     highline (1.6.21)
     json (1.8.1)
-    moonrope-client (1.0.0)
+    moonrope-client (1.0.1)
       json (~> 1.8, >= 1.8.0)
     terminal-table (1.4.5)
-    viaduct-api (1.0.4)
-      moonrope-client (~> 1.0)
+    viaduct-api (1.0.5)
+      moonrope-client (~> 1.0.1)
 
 PLATFORMS
   ruby
