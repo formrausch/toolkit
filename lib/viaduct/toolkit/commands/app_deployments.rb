@@ -1,13 +1,13 @@
 Viaduct::Toolkit.cli.command "app:deployments" do |c|
   
-  c.syntax = "app:deployments SUBDOMAIN_OF_APP"
+  c.syntax = "app:deployments"
   c.description = "List all deployments for an application"
   c.option "--page PAGE", Integer, "The page of deployments to return"
   
   c.action do |args, opts|
     include Commander::Methods
     ensure_logged_in!
-    if application = find_application(args[0])
+    if application = find_application
       response = Viaduct::Toolkit.api.applications.deployments(:application => application['subdomain'], :page => opts.page ? opts.page.to_i : 1)
       if response.success?
 

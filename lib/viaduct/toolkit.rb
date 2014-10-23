@@ -30,6 +30,7 @@ module Viaduct
           c.program :version, Viaduct::Toolkit::VERSION
           c.program :description, "A CLI toolkit for Viaduct developers"
           c.global_option('-c', '--config FILE', 'The config file to store local credentials within') { |file| $config_file_path = file }
+          c.global_option('--app NAME', 'The application to work on') { |name| $app = name }
           c.default_command :help
           c
         end
@@ -43,6 +44,8 @@ module Viaduct
     
       def api
         @api ||= begin
+          Viaduct::API.host = config['host']                    if config['host']
+          Viaduct::API.application_token = config['app_token']  if config['app_token']
           Viaduct::API::Client.new(config['token'], config['secret'])
         end
       end

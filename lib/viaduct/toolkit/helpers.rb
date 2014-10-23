@@ -50,13 +50,13 @@ module Viaduct
         [stdout.gets(nil), stderr.gets(nil), w.value]
       end
       
-      def find_application(subdomain)
-        if subdomain.is_a?(String) && subdomain.length > 0
-          app = Viaduct::Toolkit.api.applications.info(:application => subdomain)
+      def find_application
+        if $app.is_a?(String) && $app.length > 0
+          app = Viaduct::Toolkit.api.applications.info(:application => $app)
           if app.success?
             return app.data
           else
-            puts "Couldn't find application with subdomain matching '#{subdomain}'".red
+            puts "Couldn't find application with subdomain matching '#{$app}'".red
             exit(1)
           end
         else
@@ -73,12 +73,14 @@ module Viaduct
                 end
                 exit(1)
               elsif app.data.size == 1
-                return find_application(app.data.first['subdomain'])
+                $app = app.data.first['subdomain']
+                return find_application
               else
                 puts "Multiple applications found matching your repository. Choose an application...".yellow
                 choice = choose('', *app.data.map { |a| "#{a['subdomain']}: #{a['name']}"})
                 choice = choice.split(":", 2).first
-                return find_application(choice)
+                $app = choice
+                return find_application()
               end
             end
           end

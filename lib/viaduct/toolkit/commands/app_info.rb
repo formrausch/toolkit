@@ -1,11 +1,11 @@
 Viaduct::Toolkit.cli.command "app:info" do |c|
   
-  c.syntax = "app:info SUBDOMAIN_OF_APP"
+  c.syntax = "app:info"
   c.description = "Show details of an existing application"
   c.action do |args, opts|
     include Commander::Methods
     ensure_logged_in!
-    if application = find_application(args[0])
+    if application = find_application
       details do
         heading "Application Details"
         field "Name", application['name']

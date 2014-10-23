@@ -1,10 +1,10 @@
 Viaduct::Toolkit.cli.command "domain:list" do |c|
-  c.syntax = "domain:list NAME_OF_APP"
+  c.syntax = "domain:list"
   c.description = "Return a list of domains for an application"
   c.action do |args, opts|
     include Commander::Methods
     ensure_logged_in!
-    if app = find_application(args[0])
+    if app = find_application
       response = Viaduct::Toolkit.api.domains.all(:application => app['subdomain'])
       if response.success?
         rows = response.data.map do |d|

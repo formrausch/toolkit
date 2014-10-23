@@ -1,6 +1,6 @@
 Viaduct::Toolkit.cli.command "app:env" do |c|
   
-  c.syntax = "app:env SUBDOMAIN_OF_APP"
+  c.syntax = "app:env"
   c.description = "Show all environment variables for an application"
   c.option "--simple", "Return environment variables "
   c.option "--yaml", "Return environment variables as YAML file"
@@ -8,7 +8,7 @@ Viaduct::Toolkit.cli.command "app:env" do |c|
   c.action do |args, opts|
     include Commander::Methods
     ensure_logged_in!
-    if application = find_application(args[0])
+    if application = find_application
       response = Viaduct::Toolkit.api.applications.environment_variables(:application => application['subdomain'])
       if response.success?
         if opts.simple

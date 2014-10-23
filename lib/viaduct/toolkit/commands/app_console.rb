@@ -1,6 +1,6 @@
 Viaduct::Toolkit.cli.command "app:console" do |c|
   
-  c.syntax = "app:console SUBDOMAIN_OF_APP"
+  c.syntax = "app:console"
   c.description = "Start a new SSH-based console session"
   c.option "--disable", "Disable access to the SSH console"
   c.option "--enable", "Enable access to the SSH console"
@@ -9,7 +9,7 @@ Viaduct::Toolkit.cli.command "app:console" do |c|
   c.action do |args, opts|
     include Commander::Methods
     ensure_logged_in!
-    if app = find_application(args[0])
+    if app = find_application
       
       # Check the user's SSH keys
       response = Viaduct::Toolkit.api.ssh_keys.all

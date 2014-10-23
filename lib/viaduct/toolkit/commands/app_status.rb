@@ -1,5 +1,5 @@
 Viaduct::Toolkit.cli.command "app:status" do |c|
-  c.syntax = "app:status NAME_OF_APP"
+  c.syntax = "app:status"
   c.description = "Return current status of an application"
   c.option "--process PROCESS_TYPE", String, "A process to show expanded information for"
   c.option "--database DATABASE_ID", String, "The ID of the database to display further information for"
@@ -7,7 +7,7 @@ Viaduct::Toolkit.cli.command "app:status" do |c|
   c.action do |args, opts|
     include Commander::Methods
     ensure_logged_in!
-    if app = find_application(args[0])
+    if app = find_application
       response = Viaduct::Toolkit.api.applications.status(:application => app['subdomain'])
       if response.success?
         
