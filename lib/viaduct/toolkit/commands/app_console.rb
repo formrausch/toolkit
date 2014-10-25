@@ -1,7 +1,7 @@
 Viaduct::Toolkit.cli.command "app:console" do |c|
 
   c.syntax = "app:console"
-  c.description = "Start a new SSH-based console session"
+  c.description = "Start a new console session"
   c.option "--disable", "Disable access to the SSH console"
   c.option "--enable", "Enable access to the SSH console"
   c.option "--status", "Display the status of the port forward"
@@ -124,6 +124,3 @@ Viaduct::Toolkit.cli.command "app:console" do |c|
   end
 
 end
-
-
-Viaduct::Toolkit.cli.alias_command "app:ssh", "app:console"
