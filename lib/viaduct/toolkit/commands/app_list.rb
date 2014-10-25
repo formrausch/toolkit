@@ -5,7 +5,7 @@ Viaduct::Toolkit.cli.command "app:list" do |c|
   c.action do |args, opts|
     include Commander::Methods
     ensure_logged_in!
-    
+
     pages_seen = 0
     applications = []
     loop do
@@ -31,6 +31,6 @@ Viaduct::Toolkit.cli.command "app:list" do |c|
       end
       table ['Name', 'Subdomain', 'Status', 'Owner'], rows
     end
-    
+
   end
 end

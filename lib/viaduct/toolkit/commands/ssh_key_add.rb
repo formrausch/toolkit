@@ -1,14 +1,14 @@
 Viaduct::Toolkit.cli.command "ssh_key:add" do |c|
-  
+
   c.syntax = "ssh_keys:add PATH_TO_PUBLIC_KEY"
   c.description = "Add a new SSH public key to your user account"
-  
+
   c.action do |args, opts|
     include Commander::Methods
     ensure_logged_in!
-    
+
     key_path = args[0]
-    
+
     default_key_path = File.join(ENV['HOME'], '.ssh', 'id_rsa.pub')
     if key_path.nil? && File.exist?(default_key_path)
       puts "You haven't provided an SSH key to this command.".yellow
@@ -18,7 +18,7 @@ Viaduct::Toolkit.cli.command "ssh_key:add" do |c|
         exit(1)
       end
     end
-    
+
     if File.exist?(key_path)
       response = Viaduct::Toolkit.api.ssh_keys.add(:label => "Added from #{`hostname`}", :key => File.read(key_path))
       if response.success?
@@ -36,5 +36,5 @@ Viaduct::Toolkit.cli.command "ssh_key:add" do |c|
       exit(1)
     end
   end
-  
+
 end

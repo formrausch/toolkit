@@ -1,5 +1,5 @@
 Viaduct::Toolkit.cli.command "app:env" do |c|
-  
+
   c.syntax = "app:env"
   c.description = "Show all environment variables for an application"
   c.option "--simple", "Return environment variables "

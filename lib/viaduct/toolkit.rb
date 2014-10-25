@@ -13,16 +13,16 @@ Commander::Methods.send :include, Viaduct::Toolkit::Helpers
 
 module Viaduct
   module Toolkit
-    
+
     class Error < StandardError
     end
-    
+
     class << self
-      
+
       def binary
         File.expand_path(File.join('..', '..', '..', 'bin', 'viaduct'), __FILE__)
       end
-      
+
       def cli
         @cli ||= begin
           c = Commander::Runner.instance
@@ -36,13 +36,13 @@ module Viaduct
           c
         end
       end
-    
+
       def add_commands
         Dir[File.expand_path(File.join('..', 'toolkit', 'commands', '*.rb'), __FILE__)].each do |file|
           require file
         end
       end
-    
+
       def api
         @api ||= begin
           if $dev
@@ -54,19 +54,19 @@ module Viaduct
           Viaduct::API::Client.new(env_config['token'], env_config['secret'])
         end
       end
-      
+
       def reset_api
         @api = nil
       end
-    
+
       def config_file_path
         $config_file_path || File.join(ENV['HOME'], '.viaduct')
       end
-      
+
       def env_config
         config[$dev ? 'dev' : 'live'] ||= {}
       end
-    
+
       def config
         @config ||= begin
           if File.exist?(config_file_path)
@@ -76,13 +76,13 @@ module Viaduct
           end
         end
       end
-    
+
       def save_config
         File.open(config_file_path, 'w') do |f|
           f.write self.config.to_yaml
         end
       end
-      
+
     end
   end
 end

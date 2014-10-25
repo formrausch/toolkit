@@ -1,9 +1,9 @@
 Viaduct::Toolkit.cli.command "app:deployments" do |c|
-  
+
   c.syntax = "app:deployments"
   c.description = "List all deployments for an application"
   c.option "--page PAGE", Integer, "The page of deployments to return"
-  
+
   c.action do |args, opts|
     include Commander::Methods
     ensure_logged_in!
@@ -12,7 +12,7 @@ Viaduct::Toolkit.cli.command "app:deployments" do |c|
       if response.success?
 
         require 'terminal-table'
-        
+
         colourer = Proc.new do |d, field|
           if d['status'] == 'deployed'
             field.to_s.green
@@ -22,7 +22,7 @@ Viaduct::Toolkit.cli.command "app:deployments" do |c|
             field
           end
         end
-        
+
         rows = response.data.map do |d|
           [
             colourer.call(d, d['number']),

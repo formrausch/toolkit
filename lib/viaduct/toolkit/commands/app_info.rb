@@ -1,5 +1,5 @@
 Viaduct::Toolkit.cli.command "app:info" do |c|
-  
+
   c.syntax = "app:info"
   c.description = "Show details of an existing application"
   c.action do |args, opts|
@@ -24,7 +24,7 @@ Viaduct::Toolkit.cli.command "app:info" do |c|
           field 'Username', application['repository']['repository']['username']
           field 'Branch', application['repository']['branch']
         end
-        
+
         if application['deployment']
           heading "Active Deployment"
           field 'Number', application['deployment']['number']
@@ -41,5 +41,5 @@ Viaduct::Toolkit.cli.command "app:info" do |c|
       end
     end
   end
-  
+
 end
