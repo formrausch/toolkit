@@ -117,3 +117,5 @@ def process_details(p)
   field "Last respawn", time(p['respawning']['last'])
 
 end
+
+Viaduct::Toolkit.cli.alias_command "status", "app:status"

@@ -114,6 +114,7 @@ Viaduct::Toolkit.cli.command "app:console" do |c|
           end
         end
 
+        puts "Connecting...".magenta
         command = "ssh vdt@#{console['ip_address']} -p #{console['port']}"
 
         exec(command)
