@@ -107,17 +107,10 @@ Viaduct::Toolkit.cli.command "app:console" do |c|
         # Enable if needed and connect.
         #
         unless console['enabled']
-          puts "SSH Console access is not currently enabled for this application.".magenta
-          if enable =  agree("Would you like to enable it now?".blue)
-            disable_after_hour = agree("Would you like to disable this again after an hour?".blue)
-            response = Viaduct::Toolkit.api.port_forwards.save(:id => console['id'], :enabled => 1, :auto_disable_at => (disable_after_hour ? "1 hour from now" : nil))
-            unless response.success?
-              puts response.inspect
-              error "We couldn't enable console access at this time. Please try later."
-            end
-          else
-            puts "Unfortunately, unless enabled you cannot use this command.".red
-            exit(1)
+          puts "SSH Console access is not currently enabled for this application. Enabling...".magenta
+          response = Viaduct::Toolkit.api.port_forwards.save(:id => console['id'], :enabled => 1, :auto_disable_at => '5 minutes from now')
+          unless response.success?
+            error "We couldn't enable console access at this time. Please try later."
           end
         end
 

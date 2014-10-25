@@ -20,8 +20,10 @@ Viaduct::Toolkit.cli.command "app:info" do |c|
           heading "Repository"
           field 'URL', application['repository']['repository']['url']
           field 'Status', application['repository']['repository']['status']
-          field 'Last update', application['repository']['repository']['last_updated_at']
-          field 'Username', application['repository']['repository']['username']
+          field 'Last updated', application['repository']['repository']['last_updated_at']
+          if application['repository']['repository']['username']
+            field 'Username', application['repository']['repository']['username']
+          end
           field 'Branch', application['repository']['branch']
         end
 
@@ -29,7 +31,6 @@ Viaduct::Toolkit.cli.command "app:info" do |c|
           heading "Active Deployment"
           field 'Number', application['deployment']['number']
           field 'Started at', application['deployment']['timing']['created_at']
-          field 'Time', application['deployment']['timing']['time'].round(1).to_s + "s"
           field 'Description', application['deployment']['version']['description']
           field 'Source', application['deployment']['triggered_from']
           if application['deployment']['user']
