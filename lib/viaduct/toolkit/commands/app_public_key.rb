@@ -9,4 +9,3 @@ Viaduct::Toolkit.cli.command "app:public_key" do |c|
     end
   end
 end
-Viaduct::Toolkit.cli.alias_command "app:pk", "app:public_key"
