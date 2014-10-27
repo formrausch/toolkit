@@ -11,45 +11,8 @@ Viaduct::Toolkit.cli.command "app:console" do |c|
     ensure_logged_in!
     if app = find_application
 
-      # Check the user's SSH keys
-      response = Viaduct::Toolkit.api.ssh_keys.all
-      if response.success?
-
-        if response.data.empty?
-          puts "You haven't uploaded any SSH keys to your Viaduct user account.".red
-          puts "You cannot use SSH console access without them.".red
-          puts
-          puts "Upload your key using the command below".blue
-          puts
-          puts "    $ vdt ssh_keys:add".blue
-          puts
-          exit(1)
-        else
-          stdout, stderr, status = run("ssh-add -l")
-          if status == 0
-            remote_fingerprints = response.data.map { |d| d['fingerprint'] }
-            local_fingerprints = stdout.split(/\n/).map { |l| l.split(/\s+/)[1] }
-            unless remote_fingerprints.any? { |f| local_fingerprints.include?(f) }
-              puts "Warning: it doesn't seem as though your SSH key has been uploaded".yellow
-              puts "to your Viaduct account. This session may not succeed. If it doesn't".yellow
-              puts "ensure that you have uploaded to your SSH key to your Viaduct account.".yellow
-            end
-          end
-        end
-
-      else
-        error "Couldn't verify remote SSH keys. Please try again."
-      end
-
-      # Get the console port forward for the application
-      response = Viaduct::Toolkit.api.port_forwards.all(:application => app['subdomain'])
-      if response.success?
-        unless console = response.data.select { |c| c['mode'] == 'console'}.first
-          error "Console access is not supported by this application. Please contact support."
-        end
-      else
-        error "Couldn't get port forward information from API for application."
-      end
+      chech_ssh_key_presence
+      console = get_application_console_port_forward(app)
 
       if opts.status
         details do
@@ -102,25 +65,8 @@ Viaduct::Toolkit.cli.command "app:console" do |c|
         end
 
       else
-
-        #
-        # Enable if needed and connect.
-        #
-        unless console['enabled']
-          puts "SSH Console access is not currently enabled for this application. Enabling...".magenta
-          response = Viaduct::Toolkit.api.port_forwards.save(:id => console['id'], :enabled => 1, :auto_disable_at => '5 minutes from now')
-          unless response.success?
-            error "We couldn't enable console access at this time. Please try later."
-          end
-        end
-
-        puts "Connecting...".magenta
-        command = "ssh vdt@#{console['ip_address']} -p #{console['port']}"
-
-        exec(command)
+        exec_console_command(console, "ssh vdt@#{console['ip_address']} -p #{console['port']}")
       end
-
-
     end
   end
 
