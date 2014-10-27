@@ -153,7 +153,6 @@ module Viaduct
 
       def exec_console_command(console, command)
         unless console['enabled']
-          puts "SSH Console access is not currently enabled for this application. Enabling...".magenta
           response = Viaduct::Toolkit.api.port_forwards.save(:id => console['id'], :enabled => 1, :auto_disable_at => '5 minutes from now')
           unless response.success?
             error "We couldn't enable console access at this time. Please try later."
