@@ -40,5 +40,3 @@ Viaduct::Toolkit.cli.command "app:deployments" do |c|
     end
   end
 end
-
-Viaduct::Toolkit.cli.alias_command "console", "app:console"

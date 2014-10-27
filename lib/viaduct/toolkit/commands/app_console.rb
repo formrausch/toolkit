@@ -125,3 +125,5 @@ Viaduct::Toolkit.cli.command "app:console" do |c|
   end
 
 end
+
+Viaduct::Toolkit.cli.alias_command "console", "app:console"

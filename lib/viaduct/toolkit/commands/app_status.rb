@@ -10,7 +10,6 @@ Viaduct::Toolkit.cli.command "app:status" do |c|
     if app = find_application
       response = Viaduct::Toolkit.api.applications.status(:application => app['subdomain'])
       if response.success?
-
         if opts.process
 
           if process = response.data['processes'].select { |p| p['label'] == opts.process.to_s }.first
@@ -89,6 +88,7 @@ Viaduct::Toolkit.cli.command "app:status" do |c|
       end
     end
   end
+
 end
 
 def process_details(p)
