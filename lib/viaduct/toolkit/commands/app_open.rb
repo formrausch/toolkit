@@ -7,7 +7,8 @@ Viaduct::Toolkit.cli.command "app:open" do |c|
     include Commander::Methods
     ensure_logged_in!
     if application = find_application
-      system("open https://my.viaduct.io/applications/#{application['subdomain']}")
+      require 'launchy'
+      Launchy.open("https://my.viaduct.io/applications/#{application['subdomain']}")
     end
   end
 

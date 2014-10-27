@@ -10,23 +10,13 @@ Viaduct::Toolkit.cli.command "login" do |c|
     response = Viaduct::Toolkit.api.authentication.create_login_token
     if response.success?
 
-      puts "To log you in we need to open a browser window to allow".magenta
+      puts "To log you in we've opened a browser window to allow".magenta
       puts "you to enter your login details. ".magenta
-      puts
-      if agree("Shall we open this for you?".blue)
-        system("open", response.data['url'])
-      else
-        puts
-        puts "That's fine. Just go to the URL below in your browser.".magenta
-        puts "This command will continue to run until you complete this".magenta
-        puts "action.".magenta
-        puts
-        puts response.data['url']
-      end
+      require 'launchy'
+      Launchy.open(response.data['url'])
 
       puts
       puts "Please wait while we verify your login...".magenta
-      puts
       check_response = nil
       100.times do
         sleep 3
@@ -51,6 +41,7 @@ Viaduct::Toolkit.cli.command "login" do |c|
         user_check = Viaduct::Toolkit.api.user.details
         if user_check.success?
           Viaduct::Toolkit.save_config
+          puts
           puts "Hello #{user_check.data['name']}!".green
           puts "Your user account is now authorised. Your login details are".magenta
           puts "stored in a .viaduct file in your home directory.".magenta

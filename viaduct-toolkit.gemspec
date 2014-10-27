@@ -16,5 +16,6 @@ Gem::Specification.new do |s|
   s.add_dependency "viaduct-api", "~> 1.0.5"
   s.add_dependency "colorize", "~> 0.7"
   s.add_dependency "terminal-table", '~> 1.4', '>= 1.4.5'
+  s.add_dependency "launchy", ">= 2.4.2", "< 3.0"
   s.licenses    = ["MIT"]
 end
