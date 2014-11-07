@@ -52,6 +52,9 @@ Viaduct::Toolkit.cli.command "app:deploy" do |c|
         puts
         puts "Deployment will now start. You can view the full log in your web browser:"
         puts "https://my.viaduct.io/applications/#{app['subdomain']}/deployments/#{deployment_response.data['number']}".underline
+        puts
+        print "Waiting for capacity to deploy".ljust(40)
+        $stdout.flush
 
         statuses_seen = []
         require 'eventmachine'
@@ -67,10 +70,6 @@ Viaduct::Toolkit.cli.command "app:deploy" do |c|
               end
               statuses_seen << data['status']
               case data['status']
-              when 'pending'
-                puts
-                print "Waiting for capacity to deploy".ljust(40)
-                $stdout.flush
               when 'building'
                 puts "[  OK  ]".green
                 print "Building package".ljust(40)
