@@ -87,7 +87,7 @@ module Viaduct
         end
 
         puts "Couldn't determine a Viaduct application from command.".red
-        exit(1)
+        exit 1
       end
 
       def heading(title)
