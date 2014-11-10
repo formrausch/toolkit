@@ -10,26 +10,7 @@ Viaduct::Toolkit.cli.command "db:export" do |c|
 
     # Get the application
     app = find_application
-
-    # Is there a DB?
-    if opts.database
-      database_fruit = opts.database
-    elsif app['main_database']
-      database_fruit = app['main_database']['fruit']
-    else
-      puts "There is no database specified and you don't have a main database for".red
-      puts "this application. Try again using the --database option.".red
-      exit 1
-    end
-
-    # Get the database
-    database = Viaduct::Toolkit.api.applications.database(:application => app['subdomain'], :database => database_fruit)
-    if database.success?
-      database = database.data
-    else
-      puts "No database found matching '#{opts.database}'".red
-      exit 1
-    end
+    database = find_database(app, opts.database)
 
     # Set some parameters to create our new  export with
     export_params = {}

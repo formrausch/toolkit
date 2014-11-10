@@ -90,6 +90,27 @@ module Viaduct
         exit 1
       end
 
+      def find_database(app, database_name = nil)
+        # Is there a DB?
+        if database_name
+          database_fruit = database_name
+        elsif app['main_database']
+          database_fruit = app['main_database']['fruit']
+        else
+          puts "There is no database specified and you don't have a main database for".red
+          puts "this application. Try again using the --database option.".red
+          exit 1
+        end
+
+        database = Viaduct::Toolkit.api.applications.database(:application => app['subdomain'], :database => database_fruit)
+        if database.success?
+          database.data
+        else
+          puts "No database found matching '#{database_fruit}'".red
+          exit 1
+        end
+      end
+
       def heading(title)
         puts "+" + ("-" * 78) + "+"
         puts "| #{title.ljust(76).yellow} |"
