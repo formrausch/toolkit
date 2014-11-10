@@ -2,7 +2,7 @@ Viaduct::Toolkit.cli.command "app:status" do |c|
   c.syntax = "app:status"
   c.description = "Return current status of an application"
   c.option "--process PROCESS_TYPE", String, "A process to show expanded information for"
-  c.option "--database DATABASE_ID", String, "The ID of the database to display further information for"
+  c.option "--database FRUIT", String, "The ID of the database to display further information for"
 
   c.action do |args, opts|
     include Commander::Methods
@@ -29,57 +29,66 @@ Viaduct::Toolkit.cli.command "app:status" do |c|
 
         elsif opts.database
 
-          if db = response.data['databases'][(opts.database.to_i - 1).abs]
+          if db = response.data['databases'].select { |d| d['fruit'] == opts.database }.first
             details do
               heading "Database Details"
+              field "Fruit", db['fruit']
               field "Label", db['label']
-              field "Database", db['stack']['name']
+              field "Engine", db['stack']['name']
               process_details(db['process'])
             end
           else
-            puts "No database found with ID '#{opts.database}'".red
+            puts "No database found matching '#{opts.database}'".red
             exit 1
           end
 
         else
 
-          puts "Deployment Details".yellow
-          details do
-            puts "+" + '-' * 78 + '+'
-            field "Number", response.data['deployment']['number']
-            field 'Version', response.data['deployment']['version']['id']
-            field "Description", response.data['deployment']['version']['description']
-            field "Source", response.data['deployment']['triggered_from']
-            field "Deployer", response.data['deployment']['user'] ? response.data['deployment']['user']['name'] : response.data['deployment']['triggerer']
-            field "Started", time(response.data['deployment']['timing']['started_at'])
-          end
+          if response.data['deployment']
+            puts "Deployment Details".yellow
+            details do
+              puts "+" + '-' * 78 + '+'
+              field "Number", response.data['deployment']['number']
+              field 'Version', response.data['deployment']['version']['id']
+              field "Description", response.data['deployment']['version']['description']
+              field "Source", response.data['deployment']['triggered_from']
+              field "Deployer", response.data['deployment']['user'] ? response.data['deployment']['user']['name'] : response.data['deployment']['triggerer']
+              field "Started", time(response.data['deployment']['timing']['started_at'])
+            end
 
-          processes = response.data['processes'].map do |p|
-            memory_used = (p['process']['resources']['memory_usage'] / 1024 / 1024).to_s + "MB"
-            memory_available = (p['process']['resources']['max_memory'] / 1024 / 1024).to_s + "MB"
-            memory = "#{memory_used}/#{memory_available}"
+            processes = response.data['processes'].map do |p|
+              memory_used = (p['process']['resources']['memory_usage'] / 1024 / 1024).to_s + "MB"
+              memory_available = (p['process']['resources']['max_memory'] / 1024 / 1024).to_s + "MB"
+              memory = "#{memory_used}/#{memory_available}"
 
-            respawns = "#{p['process']['respawning']['current']}/#{p['process']['respawning']['maximum']}"
-            [p['label'], p['process']['status'].capitalize, memory, p['container']['command'], respawns]
+              respawns = "#{p['process']['respawning']['current']}/#{p['process']['respawning']['maximum']}"
+              [p['label'], p['process']['status'].capitalize, memory, p['container']['command'], respawns]
+            end
+            puts
+            puts "Processes".yellow
+            table ['Label', 'Status', 'Memory', 'Command', 'Respawns'], processes
+          else
+            puts "No process info available. Not deployed yet.".yellow
           end
-          puts
-          puts "Processes".yellow
-          table ['Label', 'Status', 'Memory', 'Command', 'Respawns'], processes
 
           count = 0
           databases = response.data['databases'].map do |d|
             count += 1
-            memory_used = (d['process']['resources']['memory_usage'] / 1024 / 1024).to_s + "MB"
-            memory_available = (d['process']['resources']['max_memory'] / 1024 / 1024).to_s + "MB"
-            memory = "#{memory_used}/#{memory_available}"
+            if d['process']['resources']['memory_usage']
+              memory_used = (d['process']['resources']['memory_usage'] / 1024 / 1024).to_s + "MB"
+              memory_available = (d['process']['resources']['max_memory'] / 1024 / 1024).to_s + "MB"
+              memory = "#{memory_used}/#{memory_available}"
+            else
+              memory = ""
+            end
             respawns = "#{d['process']['respawning']['current']}/#{d['process']['respawning']['maximum']}"
 
-            [count, d['label'], d['process']['status'].capitalize, d['stack']['name'], memory, respawns, d['process']['networking']['ip_address']]
+            [d['fruit'], d['label'], d['process']['status'].capitalize, d['stack']['name'], memory, respawns, d['process']['networking']['ip_address']]
           end
           unless databases.empty?
             puts
             puts "Dedicated Databases".yellow
-            table ['#', 'Label', 'Status', 'Type', 'Memory', 'Respawns', 'IP Address'], databases
+            table ['Fruit', 'Label', 'Status', 'Type', 'Memory', 'Respawns', 'IP Address'], databases
           end
         end
 
