@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.files = Dir["{bin,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.executables << "vdt"
   s.add_dependency "commander", '~> 4.2'
-  s.add_dependency "viaduct-api", '~> 1.0', '>= 1.0.5'
+  s.add_dependency "viaduct-api", '~> 1.0', '>= 1.0.7'
   s.add_dependency "colorize", "~> 0.7"
   s.add_dependency "terminal-table", '~> 1.4', '>= 1.4.5'
   s.add_dependency "launchy", ">= 2.4.2", "< 3.0"

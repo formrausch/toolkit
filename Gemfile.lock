@@ -1,12 +1,12 @@
 PATH
   remote: .
   specs:
-    viaduct-toolkit (0.1.0)
+    viaduct-toolkit (1.0.0)
       colorize (~> 0.7)
       commander (~> 4.2)
       launchy (>= 2.4.2, < 3.0)
       terminal-table (~> 1.4, >= 1.4.5)
-      viaduct-api (~> 1.0.5)
+      viaduct-api (~> 1.0, >= 1.0.7)
 
 GEM
   remote: https://rubygems.org/
@@ -16,9 +16,9 @@ GEM
     commander (4.2.1)
       highline (~> 1.6.11)
     eventmachine (1.0.3)
-    faye-websocket (0.7.5)
+    faye-websocket (0.8.0)
       eventmachine (>= 0.12.0)
-      websocket-driver (>= 0.3.5)
+      websocket-driver (>= 0.4.0)
     highline (1.6.21)
     json (1.8.1)
     launchy (2.4.2)
@@ -26,10 +26,10 @@ GEM
     moonrope-client (1.0.1)
       json (~> 1.8, >= 1.8.0)
     terminal-table (1.4.5)
-    viaduct-api (1.0.6)
-      faye-websocket (~> 0.7.5)
+    viaduct-api (1.0.7)
+      faye-websocket (~> 0.8)
       moonrope-client (~> 1.0.1)
-    websocket-driver (0.3.5)
+    websocket-driver (0.4.0)
 
 PLATFORMS
   ruby
