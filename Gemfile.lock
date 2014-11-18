@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    viaduct-toolkit (1.0.5)
+    viaduct-toolkit (1.0.6)
       colorize (~> 0.7)
       commander (~> 4.2)
       launchy (>= 2.4.2, < 3.0)
