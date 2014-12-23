@@ -139,7 +139,7 @@ module Viaduct
             puts
             puts "Upload your key using the command below".blue
             puts
-            puts "    $ vdt ssh_keys:add".blue
+            puts "    $ vdt ssh_key:add".blue
             puts
             exit(1)
           else
