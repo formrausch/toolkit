@@ -27,7 +27,7 @@ Viaduct::Toolkit.cli.command "app:list" do |c|
       end
     else
       rows = applications.map do |app|
-        [app['name'], app['subdomain'], app['status'], app['owner'] && app['owner']['owner'] ? app['owner']['owner']['name'] : '---']
+        [app['name'], app['subdomain'], app['status'], app['owner'] && app['owner']['owner'] ? app['owner']['owner']['name'] : '']
       end
       table ['Name', 'Subdomain', 'Status', 'Owner'], rows
     end

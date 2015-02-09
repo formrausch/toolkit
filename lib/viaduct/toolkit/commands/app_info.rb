@@ -12,7 +12,7 @@ Viaduct::Toolkit.cli.command "app:info" do |c|
         field "Viaduct Domain", application['viaduct_domain']
         field "Status", application['status']
         field "Maintenance", application['maintenance?'] ? 'Yes' : 'No'
-        field 'Owner', "#{application['user']['name']} (#{application['user']['username']})"
+        field 'Owner', "#{application['owner']['owner']['name']} (#{application['owner']['owner']['username']})"
         field "Zone", application['zone']['name']
         field "Platform", "#{application['platform']['name']} (on #{application['platform']['stack']['name']} stack)"
         field "Subnet(s)", application['subnets'].map { |s| s['description'] }.join(', ')
