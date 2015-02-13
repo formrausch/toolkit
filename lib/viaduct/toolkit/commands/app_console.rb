@@ -5,6 +5,7 @@ Viaduct::Toolkit.cli.command "app:console" do |c|
   c.option "--disable", "Disable access to the SSH console"
   c.option "--enable", "Enable access to the SSH console"
   c.option "--status", "Display the status of the port forward"
+  c.option "-A", "--forward-agent", "Forward agent to this SSH session"
 
   c.action do |args, opts|
     include Commander::Methods
@@ -65,7 +66,9 @@ Viaduct::Toolkit.cli.command "app:console" do |c|
         end
 
       else
-        exec_console_command(console, "ssh vdt@#{console['ip_address']} -p #{console['port']}")
+        ssh_opts = ["-p #{console['port']}"]
+        ssh_opts << "-A" if opts.forward_agent
+        exec_console_command(console, "ssh #{ssh_opts.join(' ')} vdt@#{console['ip_address']}")
       end
     end
   end
