@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'addressable', '= 2.3.6'
   s.add_dependency 'colorize', '= 0.7.3'
   s.add_dependency 'commander', '= 4.2.1'
-  s.add_dependency 'eventmachine', '= 1.0.3'
+  s.add_dependency 'eventmachine', '= 1.0.7'
   s.add_dependency 'faye-websocket', '= 0.8.0'
   s.add_dependency 'highline', '= 1.6.21'
   s.add_dependency 'json', '= 1.8.1'
