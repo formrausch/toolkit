@@ -50,6 +50,7 @@ module Viaduct
             Viaduct::API.port = 5000
             Viaduct::API.ssl = false
             Viaduct::API.application_token = 'example'
+            Viaduct::API.push_port = 8155
           end
           Viaduct::API::Client.new(env_config['token'], env_config['secret'])
         end
