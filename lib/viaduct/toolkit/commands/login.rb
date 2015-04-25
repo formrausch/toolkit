@@ -27,10 +27,10 @@ Viaduct::Toolkit.cli.command "login" do |c|
             @authorised = true
             break
           elsif check_response.data['status'] == 'denied'
-            error "The login request was rejected. Ensure that you approve the login request."
+            raise Viaduct::Toolkit::Error, "The login request was rejected. Ensure that you approve the login request."
           end
         else
-          error "Couldn't successfully exchange login token for an API token. Please try again later."
+          raise Viaduct::Toolkit::Error, "Couldn't successfully exchange login token for an API token. Please try again later."
         end
       end
 
@@ -47,14 +47,14 @@ Viaduct::Toolkit.cli.command "login" do |c|
           puts "stored in a .viaduct file in your home directory.".magenta
           puts
         else
-          error "We couldn't verify your user details. Please try again."
+          raise Viaduct::Toolkit::Error, "We couldn't verify your user details. Please try again."
         end
       else
-        error "We didn't receive a login response in a timely manner. Please try again."
+        raise Viaduct::Toolkit::Error, "We didn't receive a login response in a timely manner. Please try again."
       end
 
     else
-      error "Couldn't generate a remote login token. Please try again."
+      raise Viaduct::Toolkit::Error, "Couldn't generate a remote login token. Please try again."
     end
 
   end
