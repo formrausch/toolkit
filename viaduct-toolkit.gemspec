@@ -13,6 +13,7 @@ Gem::Specification.new do |s|
   s.files       = Dir["{bin,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md", "Gemfile", "Gemfile.lock", "viaduct-toolkit.gemspec", "cacert.pem"]
   s.executables << "vdt"
   s.licenses    = ["MIT"]
+  s.add_dependency 'bundler', '>= 1.10.5'
   s.add_dependency 'addressable', '= 2.3.6'
   s.add_dependency 'colorize', '= 0.7.3'
   s.add_dependency 'commander', '= 4.2.1'

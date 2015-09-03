@@ -2,6 +2,7 @@ task :add_dependencies_to_gemspec do
   root = File.expand_path('..', __FILE__)
   dep_list = []
   gemfile = Bundler::LockfileParser.new(File.read(File.join(root, 'Gemfile.lock')))
+  dep_list << "  s.add_dependency 'bundler', '>= 1.10.5'"
   gemfile.specs.each do |dep|
     dep_list << "  s.add_dependency '#{dep.name}', '= #{dep.version}'"
   end

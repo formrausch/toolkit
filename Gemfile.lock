@@ -33,3 +33,6 @@ DEPENDENCIES
   rake
   terminal-table (~> 1.4, >= 1.4.5)
   viaduct-api (~> 1.0, >= 1.0.7)
+
+BUNDLED WITH
+   1.10.6
