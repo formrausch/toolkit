@@ -142,17 +142,6 @@ module Viaduct
             puts "    $ vdt ssh_key:add".blue
             puts
             exit(1)
-          else
-            stdout, stderr, status = run("ssh-add -l")
-            if status == 0
-              remote_fingerprints = response.data.map { |d| d['fingerprint'] }
-              local_fingerprints = stdout.split(/\n/).map { |l| l.split(/\s+/)[1] }
-              unless remote_fingerprints.any? { |f| local_fingerprints.include?(f) }
-                puts "Warning: it doesn't seem as though your SSH key has been uploaded".yellow
-                puts "to your Viaduct account. This session may not succeed. If it doesn't".yellow
-                puts "ensure that you have uploaded to your SSH key to your Viaduct account.".yellow
-              end
-            end
           end
         else
           error "Couldn't verify remote SSH keys. Please try again."
