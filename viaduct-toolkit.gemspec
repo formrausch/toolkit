@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'eventmachine', '= 1.0.7'
   s.add_dependency 'faye-websocket', '= 0.8.0'
   s.add_dependency 'highline', '= 1.6.21'
-  s.add_dependency 'json', '= 1.8.1'
+  s.add_dependency 'json', '= 1.8.3'
   s.add_dependency 'launchy', '= 2.4.3'
   s.add_dependency 'moonrope-client', '= 1.0.1'
   s.add_dependency 'rake', '= 10.4.2'
