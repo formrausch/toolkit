@@ -13,7 +13,10 @@ Viaduct::Toolkit.cli.command "login" do |c|
       puts "To log you in we've opened a browser window to allow".magenta
       puts "you to enter your login details. ".magenta
       require 'launchy'
-      Launchy.open(response.data['url'])
+      Launchy.open(response.data['url']) do |exception|
+        puts "Failed to open browser - use the following link to login:"
+        puts response.data['url']
+      end
 
       puts
       puts "Please wait while we verify your login...".magenta
