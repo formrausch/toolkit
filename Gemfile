@@ -6,4 +6,4 @@ gem "terminal-table", '~> 1.4', '>= 1.4.5'
 gem "launchy", ">= 2.4.2", "< 3.0"
 gem "eventmachine", ">= 1.0.7", "< 1.1"
 gem 'rake'
-gem 'json', '~> 1.8.3'
+gem 'json', '~> 1.8.5'
