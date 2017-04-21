@@ -27,5 +27,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'terminal-table', '= 1.4.5'
   s.add_dependency 'viaduct-api', '= 1.0.7'
   s.add_dependency 'websocket-driver', '= 0.4.0'
-  s.add_dependency 'highline', '>= 1.7.8'
+  
 end
