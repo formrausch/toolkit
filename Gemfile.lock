@@ -10,7 +10,7 @@ GEM
       eventmachine (>= 0.12.0)
       websocket-driver (>= 0.4.0)
     highline (1.7.8)
-    json (1.8.3)
+    json (1.8.6)
     launchy (2.4.3)
       addressable (~> 2.3)
     moonrope-client (1.0.1)
@@ -29,11 +29,11 @@ DEPENDENCIES
   colorize (~> 0.7)
   commander (~> 4.2)
   eventmachine (>= 1.0.7, < 1.1)
-  json (~> 1.8.3)
+  json (~> 1.8.5)
   launchy (>= 2.4.2, < 3.0)
   rake
   terminal-table (~> 1.4, >= 1.4.5)
   viaduct-api (~> 1.0, >= 1.0.7)
 
 BUNDLED WITH
-   1.11.2
+   1.14.6
